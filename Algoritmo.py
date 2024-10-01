@@ -1,36 +1,62 @@
-def heapify(arr, n, i):
-    largest = i  # Inicializar el nodo más grande como raíz
-    left = 2 * i + 1  # Hijo izquierdo
-    right = 2 * i + 2  # Hijo derecho
-
-    # Verificar si el hijo izquierdo es más grande que la raíz
-    if left < n and arr[i] < arr[left]:
-        largest = left
-
-    # Verificar si el hijo derecho es más grande que el nodo más grande hasta ahora
-    if right < n and arr[largest] < arr[right]:
-        largest = right
-
-    # Cambiar la raíz si es necesario
-    if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]  # Intercambiar
-        heapify(arr, n, largest)  # Heapify la raíz
-
-def heapSort(arr):
+if __name__ == "__main__":
+    arr = [3, 4, 1, 2, 6]
+    print("Array sin ordenar: ", arr)
+    
     n = len(arr)
-
+    
     # Construir un maxheap
     for i in range(n // 2 - 1, -1, -1):
-        heapify(arr, n, i)
+        largest = i
+        left = 2 * i + 1
+        right = 2 * i + 2
+
+        if left < n and arr[i] < arr[left]:
+            largest = left
+
+        if right < n and arr[largest] < arr[right]:
+            largest = right
+
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            j = largest
+            while True:
+                largest = j
+                left = 2 * j + 1
+                right = 2 * j + 2
+
+                if left < n and arr[j] < arr[left]:
+                    largest = left
+
+                if right < n and arr[largest] < arr[right]:
+                    largest = right
+
+                if largest != j:
+                    arr[j], arr[largest] = arr[largest], arr[j]
+                    j = largest
+                else:
+                    break
 
     # Extraer elementos uno por uno
     for i in range(n-1, 0, -1):
-        arr[i], arr[0] = arr[0], arr[i]  # Intercambiar
-        heapify(arr, i, 0)
+        arr[i], arr[0] = arr[0], arr[i]
         
+        j = 0
+        while True:
+            largest = j
+            left = 2 * j + 1
+            right = 2 * j + 2
 
-if __name__ == "__main__":
-    arr = [12, 11, 13, 5, 6, 7]
-    print("Array sin ordenar: ", arr)
-    heapSort(arr)
+            if left < i and arr[j] < arr[left]:
+                largest = left
+
+            if right < i and arr[largest] < arr[right]:
+                largest = right
+
+            if largest != j:
+                arr[j], arr[largest] = arr[largest], arr[j]
+                j = largest
+            else:
+                break
+
     print("Array ordenado: ", arr)
+
